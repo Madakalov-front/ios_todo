@@ -1,75 +1,104 @@
-# React + TypeScript + Vite
+# Заметки
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Веб-приложение «Заметки» в стиле macOS: создание, поиск и редактирование заметок с поддержкой Markdown, офлайн-режима и установки как PWA.
 
-Currently, two official plugins are available:
+**Демо:** [superb-duckanoo-9411a6.netlify.app](https://superb-duckanoo-9411a6.netlify.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Логин | Пароль |
+|-------|--------|
+| `demo` | `demo` |
 
-## React Compiler
+## Скриншоты
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+### Просмотр заметки с Markdown
 
-Note: This will impact Vite dev & build performances.
+![Просмотр заметки](docs/screenshots/01-note-view.png)
 
-## Expanding the ESLint configuration
+Заметка отображается в режиме чтения: заголовок, списки и форматирование рендерятся из Markdown.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Подтверждение удаления
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+![Подтверждение удаления](docs/screenshots/02-delete-confirm.png)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Перед удалением показывается модальное окно с предупреждением — случайно удалить заметку нельзя.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Новая заметка
+
+![Новая заметка](docs/screenshots/03-empty-note.png)
+
+Список заметок в боковой панели, рабочая область справа и кнопки «Редактировать» / «Удалить».
+
+## Возможности
+
+- **Авторизация** — простой вход по логину и паролю (демо-учётная запись)
+- **CRUD заметок** — создание, просмотр, редактирование и удаление
+- **Markdown** — ввод в редакторе, просмотр с рендерингом через `marked` + санитизация `DOMPurify`
+- **Автосохранение** — изменения сохраняются в IndexedDB с задержкой 500 мс
+- **Поиск** — фильтрация заметок по заголовку и содержимому
+- **Офлайн** — данные хранятся локально в браузере (Dexie / IndexedDB)
+- **PWA** — можно установить на рабочий стол и работать без сети после первой загрузки
+
+## Стек
+
+| Категория | Технологии |
+|-----------|------------|
+| UI | React 19, TypeScript, SCSS, Ant Design |
+| Состояние | Redux Toolkit (RTK Query) |
+| Маршрутизация | React Router |
+| Хранилище | Dexie (IndexedDB) |
+| PWA | vite-plugin-pwa, Workbox |
+| Сборка | Vite 8, React Compiler |
+
+## Архитектура
+
+Проект организован по [Feature-Sliced Design](https://feature-sliced.design/):
+
+```
+src/
+├── app/        # провайдеры, роутер, store, layout
+├── pages/      # login, notes
+├── widgets/    # header, sidebar, workspace
+├── feature/    # create-note, note-editor, note-list, search
+├── features/   # auth
+├── entities/   # note, session
+└── shared/     # ui, lib, config, styles
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Быстрый старт
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# установка зависимостей
+npm install
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# режим разработки
+npm run dev
+
+# production-сборка
+npm run build
+
+# локальный просмотр сборки (для проверки PWA)
+npm run preview
 ```
+
+Приложение откроется на `http://localhost:5173` (dev) или `http://localhost:4173` (preview).
+
+## Проверка PWA локально
+
+Service worker генерируется только в production-сборке:
+
+1. `npm run build && npm run preview`
+2. Откройте DevTools → **Application** → проверьте **Manifest** и **Service Workers**
+3. Включите **Offline** и обновите страницу — приложение должно продолжить работать
+
+## Скрипты
+
+| Команда | Описание |
+|---------|----------|
+| `npm run dev` | Dev-сервер с HMR |
+| `npm run build` | TypeScript + production-сборка |
+| `npm run preview` | Локальный сервер для `dist/` |
+| `npm run lint` | ESLint |
+
+## Лицензия
+
+MIT
