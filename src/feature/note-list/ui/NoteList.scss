@@ -1,0 +1,75 @@
+@use "shared/styles/variables" as *;
+@use "shared/styles/mixins" as *;
+
+.note-list {
+  display: flex;
+  flex-direction: column;
+  gap: #{ios-var("spacing-xs")};
+
+  &__group {
+    background: #{ios-var("bg-elevated")};
+    border-radius: #{ios-var("radius-lg")};
+    overflow: hidden;
+    box-shadow: 0 0 0 0.5px #{ios-var("border-subtle")};
+  }
+
+  &--loading,
+  &--empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: #{ios-var("spacing-lg")};
+    color: #{ios-var("label-secondary")};
+    font: #{ios-var("font-footnote")};
+  }
+
+  &__item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 2px #{ios-var("spacing-sm")};
+    width: 100%;
+    padding: #{ios-var("spacing-sm")} #{ios-var("spacing-md")};
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    @include list-cell-states;
+
+    &--active {
+      background: #{ios-var("cell-hover")};
+    }
+
+    &:not(:last-child) {
+      @include hairline(bottom);
+    }
+  }
+
+  &__title {
+    grid-column: 1;
+    grid-row: 1;
+    font: #{ios-var("font-headline")};
+    color: #{ios-var("label")};
+    @include text-ellipsis;
+  }
+
+  &__preview {
+    grid-column: 1;
+    grid-row: 2;
+    font: #{ios-var("font-footnote")};
+    color: #{ios-var("label-secondary")};
+    @include text-ellipsis;
+  }
+
+  &__date {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    align-self: start;
+    font: #{ios-var("font-caption")};
+    color: #{ios-var("label-secondary")};
+    white-space: nowrap;
+  }
+}

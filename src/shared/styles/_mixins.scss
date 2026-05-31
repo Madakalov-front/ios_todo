@@ -1,0 +1,58 @@
+@use "variables" as *;
+
+@mixin ios-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #{ios-var("label-tertiary")} transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  &::-webkit-scrollbar-track,
+  &::-webkit-scrollbar-track-piece {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #{ios-var("label-tertiary")};
+    border-radius: #{ios-var("radius-pill")};
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
+
+@mixin hairline($edge: bottom) {
+  @if $edge == bottom {
+    border-bottom: 0.5px solid #{ios-var("separator")};
+  } @else if $edge == right {
+    border-right: 0.5px solid #{ios-var("separator")};
+  }
+}
+
+@mixin list-cell-states {
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background: #{ios-var("cell-hover")};
+  }
+
+  &:active {
+    background: #{ios-var("cell-active")};
+  }
+}
+
+@mixin text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

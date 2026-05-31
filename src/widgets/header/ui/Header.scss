@@ -1,0 +1,27 @@
+@use "shared/styles/variables" as *;
+
+.header.ant-layout-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: #{ios-var("header-height")};
+  line-height: #{ios-var("header-height")};
+  padding: 0 #{ios-var("spacing-md")};
+  background: #{ios-var("bg-elevated")} !important;
+  border-bottom: 0.5px solid #{ios-var("separator")};
+  box-shadow: none;
+  font: #{ios-var("font-headline")};
+  color: #{ios-var("label")};
+  letter-spacing: -0.02em;
+
+  &__title {
+    flex: 1;
+    text-align: center;
+  }
+
+  &__logout {
+    color: #{ios-var("accent")} !important; // --ios-accent
+    font: #{ios-var("font-body")};
+    padding-inline: #{ios-var("spacing-sm")};
+  }
+}

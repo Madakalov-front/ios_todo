@@ -1,0 +1,5 @@
+@use "shared/styles/variables" as *;
+
+.create-note {
+  padding-top: #{ios-var("spacing-sm")};
+}

@@ -1,11 +1,7 @@
-import { MainLayout } from "./app/layout";
+import { AppProviders } from "@/app/providers/AppProviders";
 
 function App() {
-  return (
-    <>
-      <MainLayout />
-    </>
-  );
+  return <AppProviders />;
 }
 
 export default App;

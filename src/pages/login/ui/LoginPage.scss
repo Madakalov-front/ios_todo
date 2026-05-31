@@ -1,0 +1,39 @@
+@use "shared/styles/variables" as *;
+
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100svh;
+  width: 100%;
+  padding: #{ios-var("spacing-lg")};
+  background: #{ios-var("bg")};
+
+  &__card {
+    width: 100%;
+    max-width: 400px;
+    border-radius: #{ios-var("radius-lg")};
+    box-shadow: 0 0 0 0.5px #{ios-var("border-subtle")};
+  }
+
+  &__title {
+    margin-bottom: #{ios-var("spacing-xs")} !important;
+  }
+
+  &__subtitle {
+    display: block;
+    margin-bottom: #{ios-var("spacing-md")};
+  }
+
+  &__hint {
+    display: block;
+    margin-bottom: #{ios-var("spacing-md")};
+    font-size: 13px;
+
+    code {
+      padding: 0 4px;
+      border-radius: 4px;
+      background: #{ios-var("cell-hover")};
+    }
+  }
+}

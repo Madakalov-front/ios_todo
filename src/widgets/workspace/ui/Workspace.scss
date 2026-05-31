@@ -1,0 +1,86 @@
+@use "shared/styles/variables" as *;
+
+.workspace {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  padding: #{ios-var("spacing-lg")};
+  background: #{ios-var("bg-elevated")};
+
+  &--empty,
+  &--loading {
+    align-items: center;
+    justify-content: center;
+    color: #{ios-var("label-secondary")};
+    font: #{ios-var("font-subhead")};
+    text-align: center;
+  }
+
+  &__placeholder-title {
+    font: #{ios-var("font-headline")};
+    color: #{ios-var("label")};
+    margin-bottom: #{ios-var("spacing-xs")};
+  }
+
+  &__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: #{ios-var("spacing-md")};
+    margin-bottom: #{ios-var("spacing-md")};
+    flex-shrink: 0;
+  }
+
+  &__title {
+    margin: 0;
+    font: #{ios-var("font-large-title")};
+    color: #{ios-var("label")};
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: #{ios-var("spacing-sm")};
+  }
+
+  &__body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__markdown {
+    font: #{ios-var("font-body")};
+    line-height: 1.6;
+    color: #{ios-var("label")};
+
+    h1,
+    h2,
+    h3 {
+      margin: 1em 0 0.5em;
+      color: #{ios-var("label")};
+    }
+
+    p {
+      margin-bottom: 0.75em;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 0.75em 1.25em;
+    }
+
+    code {
+      padding: 0.1em 0.35em;
+      border-radius: 4px;
+      background: #{ios-var("cell-hover")};
+      font-size: 0.9em;
+    }
+  }
+}

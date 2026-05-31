@@ -7,11 +7,16 @@ interface ButtonDefaultProps extends ButtonProps {
 
 export const ButtonDefault = ({
   children,
+  className,
   ...restProps
 }: ButtonDefaultProps) => {
   return (
-    <Button {...restProps} type="dashed" shape="round">
-      {children || "Создать заметку"}
+    <Button
+      {...restProps}
+      type="primary"
+      className={["ios-btn-primary", className].filter(Boolean).join(" ")}
+    >
+      {children}
     </Button>
   );
 };

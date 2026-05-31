@@ -1,0 +1,66 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+:root {
+  @include ios-css-vars($ios-theme-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include ios-css-vars($ios-theme-dark);
+  }
+}
+
+body {
+  font-family: #{ios-var("font")};
+  font: #{ios-var("font-body")};
+  color: #{ios-var("label")};
+  background-color: #{ios-var("bg")};
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ios-scrollbar {
+  @include ios-scrollbar;
+}
+
+.ios-btn-primary.ant-btn {
+  height: auto;
+  min-height: $ios-touch-min-height;
+  padding: #{ios-var("spacing-sm")} #{ios-var("spacing-lg")};
+  font: #{ios-var("font-headline")};
+  font-weight: 600;
+  color: #{ios-var("label")};
+  background: #{ios-var("notes-yellow")};
+  border: none;
+  border-radius: #{ios-var("radius-md")};
+  box-shadow: none;
+
+  &:not(:disabled) {
+    &:hover,
+    &:active {
+      color: #{ios-var("label")};
+      background: #{ios-var("notes-yellow-pressed")};
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  .anticon {
+    font-size: $ios-icon-size;
+  }
+}
+
+.ios-layout.ant-layout {
+  background: #{ios-var("bg")};
+
+  .ant-layout-sider {
+    background: #{ios-var("sidebar-bg")} !important;
+  }
+
+  .ant-layout-content {
+    background: #{ios-var("content-bg")};
+  }
+}

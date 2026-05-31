@@ -1,0 +1,9 @@
+@use "shared/styles/variables" as *;
+
+.search-box {
+  padding: 0 #{ios-var("spacing-xs")} #{ios-var("spacing-sm")};
+
+  &__input {
+    border-radius: #{ios-var("radius-md")};
+  }
+}

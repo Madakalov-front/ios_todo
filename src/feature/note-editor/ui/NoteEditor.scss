@@ -1,0 +1,10 @@
+@use "shared/styles/variables" as *;
+
+.note-editor {
+  flex: 1;
+  min-height: 0;
+  font: #{ios-var("font-body")};
+  line-height: 1.5;
+  resize: none !important;
+  border-radius: #{ios-var("radius-md")} !important;
+}

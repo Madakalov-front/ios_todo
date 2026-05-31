@@ -1,0 +1,26 @@
+@use "shared/styles/variables" as *;
+
+.notes-sidebar {
+  background: #{ios-var("sidebar-bg")} !important;
+  border-right: 0.5px solid #{ios-var("border-subtle")};
+  min-height: 0;
+
+  &__inner {
+    height: 100%;
+    padding: #{ios-var("spacing-sm")};
+  }
+
+  &__top {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  &__list {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+  }
+}

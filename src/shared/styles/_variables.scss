@@ -1,0 +1,91 @@
+// SCSS tokens (compile-time)
+$ios-font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+  "Helvetica Neue", system-ui, sans-serif;
+
+$ios-notes-yellow: #ffd60a;
+$ios-notes-yellow-pressed-light: #e6c009;
+$ios-notes-yellow-pressed-dark: #cca300;
+$ios-accent: #007aff;
+
+$ios-radius-sm: 8px;
+$ios-radius-md: 10px;
+$ios-radius-lg: 12px;
+$ios-radius-pill: 999px;
+
+$ios-spacing-xs: 8px;
+$ios-spacing-sm: 12px;
+$ios-spacing-md: 16px;
+$ios-spacing-lg: 20px;
+
+$ios-header-height: 52px;
+$ios-sidebar-min-width: 260px;
+$ios-sidebar-width: min(320px, 32vw);
+
+$ios-touch-min-height: 44px;
+$ios-icon-size: 17px;
+
+$ios-theme-light: (
+  bg: #f2f2f7,
+  bg-elevated: #ffffff,
+  sidebar-bg: #f2f2f7,
+  content-bg: #ffffff,
+  label: #000000,
+  label-secondary: rgba(60, 60, 67, 0.6),
+  label-tertiary: rgba(60, 60, 67, 0.3),
+  separator: rgba(60, 60, 67, 0.29),
+  border-subtle: rgba(0, 0, 0, 0.06),
+  notes-yellow-pressed: $ios-notes-yellow-pressed-light,
+  cell-hover: rgba(120, 120, 128, 0.08),
+  cell-active: rgba(120, 120, 128, 0.16),
+);
+
+$ios-theme-dark: (
+  bg: #000000,
+  bg-elevated: #1c1c1e,
+  sidebar-bg: #1c1c1e,
+  content-bg: #000000,
+  label: #ffffff,
+  label-secondary: rgba(235, 235, 245, 0.6),
+  label-tertiary: rgba(235, 235, 245, 0.3),
+  separator: rgba(84, 84, 88, 0.65),
+  border-subtle: rgba(255, 255, 255, 0.08),
+  notes-yellow-pressed: $ios-notes-yellow-pressed-dark,
+  cell-hover: rgba(120, 120, 128, 0.16),
+  cell-active: rgba(120, 120, 128, 0.24),
+);
+
+@function ios-var($token) {
+  @return var(--ios-#{$token});
+}
+
+@mixin ios-css-vars($theme) {
+  @each $key, $value in $theme {
+    --ios-#{$key}: #{$value};
+  }
+
+  --ios-font: #{$ios-font-stack};
+  --ios-notes-yellow: #{$ios-notes-yellow};
+  --ios-accent: #{$ios-accent};
+
+  --ios-radius-sm: #{$ios-radius-sm};
+  --ios-radius-md: #{$ios-radius-md};
+  --ios-radius-lg: #{$ios-radius-lg};
+  --ios-radius-pill: #{$ios-radius-pill};
+
+  --ios-shadow-nav: 0 0.5px 0 #{ios-var("separator")};
+
+  --ios-spacing-xs: #{$ios-spacing-xs};
+  --ios-spacing-sm: #{$ios-spacing-sm};
+  --ios-spacing-md: #{$ios-spacing-md};
+  --ios-spacing-lg: #{$ios-spacing-lg};
+
+  --ios-header-height: #{$ios-header-height};
+  --ios-sidebar-width: #{$ios-sidebar-width};
+
+  --ios-font-large-title: 600 28px/1.15 var(--ios-font);
+  --ios-font-headline: 600 17px/1.25 var(--ios-font);
+  --ios-font-body: 400 17px/1.35 var(--ios-font);
+  --ios-font-subhead: 400 15px/1.35 var(--ios-font);
+  --ios-font-footnote: 400 13px/1.3 var(--ios-font);
+  --ios-font-caption: 400 12px/1.25 var(--ios-font);
+}
