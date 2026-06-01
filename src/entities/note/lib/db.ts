@@ -1,13 +1,23 @@
 import Dexie, { type EntityTable } from "dexie";
 import type { Note } from "../model/types";
 
+type NotesSeedMeta = {
+  key: "notesSeeded";
+  seeded: boolean;
+};
+
 export class NotesDatabase extends Dexie {
   notes!: EntityTable<Note, "id">;
+  meta!: EntityTable<NotesSeedMeta, "key">;
 
   constructor() {
     super("NotesAppDB");
     this.version(1).stores({
       notes: "id, updatedAt, createdAt",
+    });
+    this.version(2).stores({
+      notes: "id, updatedAt, createdAt",
+      meta: "key",
     });
   }
 }
@@ -45,22 +55,36 @@ const SEED_NOTES: Omit<Note, "id">[] = [
 ];
 
 export async function seedNotesIfNeeded(): Promise<void> {
-  const count = await db.notes.count();
-  if (count > 0) return;
+  // Important: do not re-seed after user deletes all notes.
+  // We seed only once per database lifetime (tracked via Dexie meta store).
+  const SEED_META_KEY: NotesSeedMeta["key"] = "notesSeeded";
 
-  const base = Date.now();
-  await db.notes.bulkAdd(
-    SEED_NOTES.map((note, index) => {
-      const ts = base - index * 86_400_000;
-      return {
-        id: crypto.randomUUID(),
-        title: note.title || deriveTitle(note.content),
-        content: note.content,
-        createdAt: ts,
-        updatedAt: ts,
-      };
-    }),
-  );
+  await db.transaction("rw", db.notes, db.meta, async () => {
+    const meta = await db.meta.get(SEED_META_KEY);
+    if (meta?.seeded) return;
+
+    const count = await db.notes.count();
+    if (count > 0) {
+      await db.meta.put({ key: SEED_META_KEY, seeded: true });
+      return;
+    }
+
+    const base = Date.now();
+    await db.notes.bulkAdd(
+      SEED_NOTES.map((note, index) => {
+        const ts = base - index * 86_400_000;
+        return {
+          id: crypto.randomUUID(),
+          title: note.title || deriveTitle(note.content),
+          content: note.content,
+          createdAt: ts,
+          updatedAt: ts,
+        };
+      }),
+    );
+
+    await db.meta.put({ key: SEED_META_KEY, seeded: true });
+  });
 }
 
 export function deriveNoteTitle(content: string): string {
